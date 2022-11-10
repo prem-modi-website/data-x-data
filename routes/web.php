@@ -11,6 +11,7 @@
 |
 */
 
+//data adddddddd
 // Route::get('/', function () {
 //     return view('login');
 // });
