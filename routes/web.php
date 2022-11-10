@@ -11,13 +11,6 @@
 |
 */
 
-//data adddddddd
-// Route::get('/', function () {
-//     return view('login');
-// });
-
-//hrellllllllllllllllllllll
-//data addddd
 Route::get('data','Blogcontroller@index')->name('data');
 Route::get('datamain','Blogcontroller@datamain')->name('datamain');
 
