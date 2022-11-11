@@ -11,7 +11,7 @@
 |
 |
 */
-//welcome data
+//welcome
 
 Route::get('data','Blogcontroller@index')->name('data');
 Route::get('datamain','Blogcontroller@datamain')->name('datamain');
