@@ -13,4 +13,12 @@ class Category extends Model
     {
         return $this->hasMany('App\ExcelData', 'category_id','id');
     }
+    public static function getCategory()
+    {
+        return Static::where('is_active',1)->latest()->take(5)->get();
+    }
+    public static function excelCount($cat_id)
+    {
+        return ExcelData::where('category_id',$cat_id)->where('is_active',1)->count();
+    }
 }
