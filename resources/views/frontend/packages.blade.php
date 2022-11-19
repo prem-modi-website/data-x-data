@@ -1,4 +1,5 @@
 @extends('frontend.partial.master')
+@inject('cat', 'App\Category')
 
 @section('breadcumb')
      <!--hero section start-->
@@ -49,14 +50,14 @@
                                         </div>
                                         <div class="price-list ps-5">
                                             <ul class="list-unstyled">
-                                                <li class="mb-3">0-5K Data Count</li>
+                                                <li class="mb-3">{{$cat::excelCount($package->category_id)}} Data Count</li>
                                                 <li class="mb-3">90% - 95% Accuracy</li>
                                                 <li class="mb-3">More then 25+ Categorys</li>
                                                 <li class="mb-3">Instant Data Delivery</li>
                                                 <li class="mb-3">Whatsapp Active status on request</li>
                                             </ul>
                                         </div>
-                                        <a class="btn btn-dark mt-5 ms-5" href="#"> <span>Buy Now</span> </a>
+                                        <a class="btn btn-dark mt-5 ms-5 purchasePackage" data-qty="{{$package->package_count}}" id="{{$package->id}}"> <span>Buy Now</span> </a>
                                     </div>
                                 </div>
                             @endforeach
@@ -67,4 +68,61 @@
                 </div>
             </section>
         <!--price table end-->
+@endsection
+
+@section('script')
+ <!--== counter -->
+ <script>
+    $(document).on('click','.purchasePackage',function(){
+        console.log($(this).attr('id'));
+        var getId = $(this).attr('id');
+        var getQty = $(this).attr('data-qty');
+        $.ajax({
+       
+            url : "{{ route('addToCart') }}",
+            data : {'package_id' : getId, 'qty' : getQty},
+            type : 'GET',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success : function(result){
+
+                console.log("===== " + result.message + " =====");
+                $('.purchaseQty_'+getId).val('');
+                window.location.href = "{{ route('checkout') }}";
+
+                getProduct();
+
+            },
+            error : function(error)
+            {
+                console.log('error');
+                console.log(error.responseJSON);
+                console.log(error.status);
+                if(error.status == 401){
+                    Swal.fire({
+                        title: 'You will need to login first',
+                        showCancelButton: true,
+                        confirmButtonColor: 'rgb(69 133 141)',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, login it!'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "{{ route('customer-login') }}";
+                        }
+                    });
+                }else
+                {
+                    Swal.fire({
+                        title: error.responseJSON.message,
+                        showCancelButton: true,
+                        confirmButtonColor: 'rgb(69 133 141)',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+                
+            }
+        });
+    });
+</script>
 @endsection

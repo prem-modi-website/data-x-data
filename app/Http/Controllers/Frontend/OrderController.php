@@ -106,7 +106,7 @@ class OrderController extends Controller
             {
 
                 $addtoCart->package_id = $package->id;
-                $addtoCart->category_id = $request->category_id;
+                $addtoCart->category_id = $package->category_id;
                 $addtoCart->qty = $request->qty;
                 $executeQuery= $addtoCart->update();
                 if(! $executeQuery)
