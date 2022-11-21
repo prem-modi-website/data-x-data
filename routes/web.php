@@ -97,6 +97,11 @@ Route::get('checkout','Frontend\OrderController@checkout')->name('checkout');
 Route::post('customer-order','Frontend\OrderController@customerOrder')->name('customerOrder');
 
 
+Route::get('forgot-password', 'Frontend\LoginController@forgotPasswordPage')->name('forgotPasswordPage');
+Route::post('forgot-password-page', 'Frontend\LoginController@forgotPass')->name('forgotPass');
+Route::post('change-password-customer', 'Frontend\LoginController@changePasswordCustomer')->name('changePasswordCustomer');
+Route::get('change-password-customer/{email}', 'Frontend\LoginController@changePassword')->name('changePasswordcus');
+
 Route::get('auth/google', 'Frontend\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Frontend\LoginController@handleGoogleCallback');
 

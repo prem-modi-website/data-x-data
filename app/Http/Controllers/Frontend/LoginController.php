@@ -10,6 +10,7 @@ use Log;
 use Validator;
 use Session;
 use App\User;
+use App\PasswordReset;
 
 class LoginController extends Controller
 {
@@ -201,5 +202,80 @@ class LoginController extends Controller
         Auth::logout();
         Session::flush();
         return redirect('customer-login'); 
+    }
+
+    public function forgotPasswordPage()
+    {
+        return view('frontend.forgot');
+    }
+    public function forgotPass(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email'
+        ];
+        $validator = Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validation->errors());
+        }
+        $token = \Str::uuid();
+        $details = [
+            'url' => route('changePasswordcus',$token),
+        ];
+        $passwordReset = new PasswordReset;
+        $passwordReset->email = $request->email;
+        $passwordReset->token = $token;
+        $passwordReset->save();
+        \Mail::to($request->email)->send(new \App\Mail\MyTestMail($details));
+       
+        // dd("Email is Sent.");
+        Session::flash('success',"Please check your email `{$request->email}`");
+        return redirect()->route('home');
+    }
+    public function changePassword($token)
+    {
+        $user = PasswordReset::where('token',$token)->first();
+        if(! $user)
+        {
+            Session::flash('error',"This data not found.Please try again.");
+            return redirect()->back();
+        }
+        return view('frontend.emails.forgotPassword',compact('user'));
+       
+
+    }
+    public function changePasswordCustomer(Request $request)
+    {
+        $rules = [
+            'new_password'=> 'required',
+            'confirm_password'=> 'required|same:new_password',
+        ];
+        $validator = Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+        try
+        {
+            $user = PasswordReset::where('token',$request->token)->first();
+    
+            $user = User::where('email',$user->email)->first();
+            $user->password = \Hash::make($request->confirm_password);
+            $user->update();
+            Session::flash('success',"Password Changed Successfully.");
+            return redirect()->route('customer-login');
+
+        }
+        catch (Exception $e) {
+            Log::info('Query: '.$e->getSql());
+            Log::info('Error: Bindings: '.$e->getBindings());
+            Log::info('Error: Code: '.$e->getCode());
+            Log::info('Error: Message: '.$e->getMessage());
+            
+            Session::flash('error',"internal server erro please try again later");
+            return redirect()->back();
+        }
+       
+
     }
 }

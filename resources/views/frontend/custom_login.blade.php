@@ -58,7 +58,7 @@
                             @endif
                             <div class="mt-4 mb-5">
                                 <div class="remember-checkbox d-flex align-items-center justify-content-end">
-                                    <a class="btn-link" href="forgot-password">Forgot Password?</a>
+                                    <a class="btn-link" href="{{route('forgotPasswordPage')}}">Forgot Password?</a>
                                 </div>
                             </div>
                             
