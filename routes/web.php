@@ -72,3 +72,37 @@ Route::post('update-package', 'PackageNewController@editpackagestore')->name('ed
 Route::get('addFormData', 'PackageNewController@addFormData')->name('addFormData');
 
 Route::post('excelexportdata', 'PackageNewController@excelexportdata')->name('excelexportdata');
+
+
+Route::get('/','Frontend\HomeController@index')->name('home');
+Route::get('/about-us','Frontend\HomeController@about')->name('about');
+Route::get('/contact-us','Frontend\HomeController@contact')->name('contact');
+Route::get('/order-complate','Frontend\HomeController@completeOrder')->name('completeOrder');
+Route::get('/packages','Frontend\HomeController@packages')->name('packages');
+Route::get('/category','Frontend\HomeController@getCategory')->name('getCategory');
+Route::get('/privacy-policy','Frontend\HomeController@privacyPolicy')->name('privacyPolicy');
+Route::get('/terms-and-condition','Frontend\HomeController@termAndCondition')->name('termAndCondition');
+
+Route::get('/customer-login','Frontend\LoginController@customerloginPage')->name('customer-login');
+Route::post('/customer-login-post','Frontend\LoginController@customerlogin')->name('customerlogin');
+Route::get('/signup','Frontend\LoginController@signup')->name('signup');
+Route::get('/custome-logout','Frontend\LoginController@customerLogout')->name('customerLogout');
+Route::post('signup-customer','Frontend\LoginController@signupCustomer')->name('sing-up');
+
+Route::get('add-to-cart','Frontend\OrderController@addToCart')->name('addToCart');
+Route::get('customer-cart','Frontend\OrderController@cart')->name('cart');
+Route::get('get-product','Frontend\OrderController@getProduct')->name('getProduct');
+Route::get('remove-product','Frontend\OrderController@removeProduct')->name('removeProduct');
+Route::get('checkout','Frontend\OrderController@checkout')->name('checkout');
+Route::post('customer-order','Frontend\OrderController@customerOrder')->name('customerOrder');
+
+
+Route::get('auth/google', 'Frontend\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'Frontend\LoginController@handleGoogleCallback');
+
+Route::get('auth/facebook', 'Frontend\LoginController@redirectToFacebook');
+Route::get('auth/facebook/callback', 'Frontend\LoginController@handleFacebookCallback');
+
+
+Route::get('razorpay-payment', 'Frontend\RazorpayPaymentController@index')->name('razorpay');
+Route::post('razorpay-payment', 'Frontend\RazorpayPaymentController@store')->name('razorpay.payment.store');

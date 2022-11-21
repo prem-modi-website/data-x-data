@@ -19,6 +19,7 @@
     <!--Bootstrap + dataxdata Admin CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/dataxdata.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+   
     <!-- Additional library for page -->
 </head>
 <!--body with default sidebar pinned -->

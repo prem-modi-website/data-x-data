@@ -25,7 +25,7 @@ class LoginController extends Controller
              }
              else if(auth()->user()->role->name == "User")
              {
-                 return redirect()->route('blank');
+                 return redirect()->route('home');
              }
         }
         else

@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->string('token')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('google_id',255)->nullable();
+            $table->string('facebook_id',255)->nullable();
+
             $table->rememberToken();
             $table->timestamps();
 
