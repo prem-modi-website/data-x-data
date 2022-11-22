@@ -278,4 +278,45 @@ class LoginController extends Controller
        
 
     }
+    public function contactMail(Request $request)
+    {
+        $rules = [
+            'first_name'=> 'required',
+            'last_name'=> 'required',
+            'email'=> 'required',
+            'phone'=> 'required',
+            'message'=> 'required',
+        ];
+        $validator = Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+        try
+        {
+            $details = [
+                "first_name" => $request->first_name,
+                "last_name" => $request->last_name,
+                "email" => $request->email,
+                "phone" => $request->phone,
+                "message" => $request->message,
+            ];
+            \Mail::to('mansi.bhanarkar@gmail.com')->send(new \App\Mail\SendContact($details));
+
+            Session::flash('success',"Contact info successfully send.");
+            return redirect()->back();
+
+        }
+        catch (Exception $e) {
+            Log::info('Query: '.$e->getSql());
+            Log::info('Error: Bindings: '.$e->getBindings());
+            Log::info('Error: Code: '.$e->getCode());
+            Log::info('Error: Message: '.$e->getMessage());
+            
+            Session::flash('error',"internal server erro please try again later");
+            return redirect()->back();
+        }
+       
+
+    }
 }

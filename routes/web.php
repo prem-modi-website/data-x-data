@@ -102,6 +102,8 @@ Route::post('forgot-password-page', 'Frontend\LoginController@forgotPass')->name
 Route::post('change-password-customer', 'Frontend\LoginController@changePasswordCustomer')->name('changePasswordCustomer');
 Route::get('change-password-customer/{email}', 'Frontend\LoginController@changePassword')->name('changePasswordcus');
 
+Route::post('contact-send', 'Frontend\LoginController@contactMail')->name('contactMail');
+
 Route::get('auth/google', 'Frontend\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Frontend\LoginController@handleGoogleCallback');
 

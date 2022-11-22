@@ -40,25 +40,41 @@
                                                 </h6>
                                                 <h2 class="mb-0"><span class="font-w-5">Describe your project and</span> leave us your contact info</h2>
                                             </div>
-                                            <form id="contact-form2" class="row" method="post" action="http://themeht.com/stacht/ltr/php/contact.php">
+                                            <form id="contact-form2" class="row" method="post" action="{{route('contactMail')}}">
+                                                @csrf
                                                 <div class="messages"></div>
                                                 <div class="col-md-6 mb-3">
-                                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="First Name" required>
+                                                    <input id="form_name" type="text" name="first_name" class="form-control" placeholder="First Name" required>
                                                 </div>
+                                                @if($errors->has('first_name'))
+                                                    <div class="error">{{ $errors->first('first_name') }}</div>
+                                                @endif
                                                 <div class="col-md-6 mb-3">
-                                                    <input id="form_name1" type="text" name="name" class="form-control" placeholder="Last Name" required>
+                                                    <input id="form_name1" type="text" name="last_name" class="form-control" placeholder="Last Name" required>
                                                 </div>
+                                                @if($errors->has('last_name'))
+                                                    <div class="error">{{ $errors->first('last_name') }}</div>
+                                                @endif
                                                 <div class="col-md-6 mb-3">
                                                     <input id="form_email" type="email" name="email" class="form-control" placeholder="Email" required>
                                                 </div>
+                                                @if($errors->has('email'))
+                                                    <div class="error">{{ $errors->first('email') }}</div>
+                                                @endif
                                                 <div class="col-md-6 mb-3">
                                                     <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Phone" required>
                                                 </div>
+                                                @if($errors->has('phone'))
+                                                    <div class="error">{{ $errors->first('phone') }}</div>
+                                                @endif
                                                 <div class="col-md-12">
                                                     <textarea id="form_message" name="message" class="form-control h-auto" placeholder="Message" rows="4" required></textarea>
                                                 </div>
+                                                @if($errors->has('message'))
+                                                    <div class="error">{{ $errors->first('message') }}</div>
+                                                @endif
                                                 <div class="col mt-5">
-                                                    <button class="btn btn-primary">Send Messages</button>
+                                                    <button class="btn btn-primary" type="submit">Send Messages</button>
                                                 </div>
                                             </form>
                                         </div>
