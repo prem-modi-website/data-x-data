@@ -150,11 +150,11 @@ class OrderController extends Controller
         {
 
             $products = AddCart::where('is_active',1)->where('user_id',auth()->user()->id)->get();
+            $count = 0;
             if($products->isEmpty())
             {
-                return view('frontend.cart',compact('products'));
+                return view('frontend.cart',compact('products','count'));
             }
-            $count = 0;
             foreach($products as $product)
             {
                 $package = Package::where('id',$product->package_id)->first();
@@ -178,11 +178,13 @@ class OrderController extends Controller
         {
 
             $products = AddCart::where('is_active',1)->where('user_id',auth()->user()->id)->get();
-            if($products->isEmpty())
-            {
-                return response()->json(['message' => 'Bad Request'],400);
+            $count = 0;
 
-            }
+            // if($products->isEmpty())
+            // {
+            //     return response()->json(['message' => 'Bad Request'],400);
+
+            // }
             $count = 0;
             foreach($products as $product)
             {
