@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
+use App\Exports\ExportData;
+use App\ExcelData;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Exception;
 use App\AddCart;
@@ -66,6 +69,22 @@ class RazorpayPaymentController extends Controller
         $payment->payment_status = 1;
         $payment->user_id = auth()->user()->id;
         $payment->save();
+        $data = ExcelData::where('category_id',$addtoCart->category_id)->where('is_active',1)->take($addtoCart->qty)->get(["category_id", "contact_number", "pin_code","sector","city","country"]);
+        $time = time().rand();
+        Excel::store(new ExportData($data), 'excel/'.$time.'.xlsx','real_public');
+        $pdfFilePath = public_path() . "/excel/" . $time.'.xlsx';
+        $details = [
+            "email" => auth()->user()->email,            
+            "document" => $pdfFilePath,
+        ];
+        \Mail::to(auth()->user()->email)->send(new \App\Mail\OrerDone($details));
+        $dataExcel = ExcelData::where('category_id',$addtoCart->category_id)->where('is_active',1)->take($addtoCart->qty)->get();
+
+        foreach($dataExcel as $d)
+        {
+            $d->is_active = 0;
+            $d->update();
+        }
         // Session::flash('success', 'Payment successful');
         return redirect()->route('completeOrder');
     }

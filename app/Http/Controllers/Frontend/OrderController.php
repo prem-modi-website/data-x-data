@@ -344,8 +344,8 @@ class OrderController extends Controller
                 return response()->json(['message' => 'Inernal server error please try again later.'],500);
             }
             
-            return redirect()->route('razorpay');
             DB::commit();
+            return redirect()->route('razorpay');
             Session::flash('success','Data Save Successfully');
             return redirect()->back();
         }

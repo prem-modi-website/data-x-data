@@ -40,7 +40,7 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
-
+   
     'disks' => [
 
         'local' => [
@@ -54,7 +54,13 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'real_public' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => env('APP_URL'),
+            'visi
+            bility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
