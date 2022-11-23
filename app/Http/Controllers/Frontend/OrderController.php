@@ -42,40 +42,41 @@ class OrderController extends Controller
                 if($request->qty > $excelCount)
                 {
                     return response()->json(['message'=> 'Please Limited package Available.'],422);
-                }
-                elseif($request->qty <  1500)
-                {
-                    Log::info("else 1");
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',1500)->first();
-        
-                }elseif($request->qty < 2000)
-                {
-                    Log::info("else 2");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',2000)->first();
-                }elseif($request->qty < 5000)
+                }                
+                elseif($request->qty < 5000)
                 {
                     Log::info("else 4");
     
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',5000)->first();
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',500)->first();
+                }elseif($request->qty < 10000)
+                {
+                    Log::info("else 4");
+    
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1000)->first();
                 }
                 elseif($request->qty < 15000)
                 {
                     Log::info("else 3");
     
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',15000)->first();
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1500)->first();
                    
-                }elseif($request->qty < 2500000)
+                }elseif($request->qty < 20000)
+                {
+                    Log::info("else 3");
+    
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2000)->first();
+                   
+                }elseif($request->qty < 25000)
                 {
                     Log::info("else 5");
     
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',2500000)->first();
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2500)->first();
                 
-                }elseif($request->qty < 5000000)
+                }elseif($request->qty < 30000)
                 {
                     Log::info("else 6");
     
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_count',5000000)->first();
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',3000)->first();
                 }
             }
             Log::info('package');

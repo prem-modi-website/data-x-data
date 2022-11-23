@@ -473,7 +473,7 @@
                                                 <li class="mb-3">Whatsapp Active status on request</li>
                                             </ul>
                                         </div>
-                                        <a class="btn btn-dark mt-5 ms-5 purchasePackage" data-qty="{{$package->package_count}}" id="{{$package->id}}"> <span>Buy Now</span> </a>
+                                        <a class="btn btn-dark mt-5 ms-5 purchasePackage" data-qty="{{$cat::excelCount($package->category_id)}}" id="{{$package->id}}"> <span>Buy Now</span> </a>
                                     </div>
                                 </div>
                                 @endforeach
