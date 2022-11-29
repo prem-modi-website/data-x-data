@@ -12,10 +12,10 @@
                                 <p class="lead mb-5 text-grey">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, temporibus. Accusamus ut doloribus optio recusandae architecto nostrum quae? Unde</p>
 
                                 <div class="subscribe-form text-center bg-white p-3 rounded">
-                                    <form id="mc-form">
+                                    <form action="{{route('getCategory')}}" method="get">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" required="" />
-                                            <button class="btn btn-dark">Search Data</button>
+                                            <input type="text" class="form-control" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />
+                                            <button class="btn btn-dark" type="submit" >Search Data</button>
                                         </div>
                                     </form>
                                 </div>
@@ -460,7 +460,7 @@
                                 @foreach($packages as $package)
                                 <div class="package_items col-lg-11">
                                     <div class="price-table rounded bg-white box-shadow">
-                                        <div class="price-title ps-5">{{$package->category->name}}</div>
+                                        <!-- <div class="price-title ps-5">{{--$package->category->name--}}</div> -->
                                         <div class="price-value my-3 ps-3 d-flex justify-content-between align-items-center">
                                             <h2 class="mb-0 me-3 text-primary"><i class="las la-rupee-sign"></i>{{$package->package_amount}}/-</h2>
                                         </div>
@@ -487,8 +487,6 @@
                 <!--price table end-->
 @endsection
 @section('script')
- <!--== counter -->
- <script src="{{asset('frontend/assets/js/counter.js')}}"></script>
  <script>
     $(document).on('click','.purchasePackage',function(){
         console.log($(this).attr('id'));

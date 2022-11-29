@@ -44,13 +44,13 @@
                             @foreach($packages as $package)
                                 <div class="package_items col-lg-11">
                                     <div class="price-table rounded bg-white box-shadow">
-                                        <div class="price-title ps-5">{{$package->category->name}}</div>
+                                        <!-- <div class="price-title ps-5">{{--$package->category->name--}}</div> -->
                                         <div class="price-value my-5 ps-5 d-flex justify-content-between align-items-center">
                                             <h2 class="mb-0 me-3 text-primary"><i class="las la-rupee-sign"></i>{{$package->package_amount}}/-</h2>
                                         </div>
                                         <div class="price-list ps-5">
                                             <ul class="list-unstyled">
-                                                <li class="mb-3">{{$cat::excelCount($package->category_id)}} Data Count</li>
+                                                <li class="mb-3">{!! $cat::excelCount($package->category_id) !!} Data Count</li>
                                                 <li class="mb-3">90% - 95% Accuracy</li>
                                                 <li class="mb-3">More then 25+ Categorys</li>
                                                 <li class="mb-3">Instant Data Delivery</li>

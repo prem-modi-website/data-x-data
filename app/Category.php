@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\BlockNumber;
 
 class Category extends Model
 {
@@ -19,6 +20,7 @@ class Category extends Model
     }
     public static function excelCount($cat_id)
     {
-        return ExcelData::where('category_id',$cat_id)->where('is_active',1)->count();
+        $blockData = BlockNumber::where('user_id',auth()->user()->id)->pluck('number');       
+        return ExcelData::where('category_id',$cat_id)->whereNotIn('contact_number',$blockData)->where('is_active',1)->count();
     }
 }

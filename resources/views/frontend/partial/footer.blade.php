@@ -51,13 +51,12 @@
                             <div class="col-12 col-lg-6 col-xl-4 mt-6 mt-xl-0">
                                 <h5 class="mb-1 text-white">Add to BlackList</h5>
                                 <div class="subscribe-form blacklist-form text-center p-3 rounded">
-                                    <form id="mc-form">
+                                   
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Enter your Black List Mobile Number"
+                                            <input type="text" class="form-control blockInput" placeholder="Enter your Black List Mobile Number"
                                                 aria-label="Enter your Black List Mobile Number" required="">
-                                            <button class="btn btn-dark">Add to BlackList</button>
+                                            <button class="btn btn-dark blockButton">Add to BlackList</button>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -78,3 +77,4 @@
             <a class="smoothscroll" href="#top"><img class="img-fluid" src="{{asset('frontend/assets/images/top-arrow.png')}}" alt="" /></a>
         </div>
         <!--back-to-top end-->
+       

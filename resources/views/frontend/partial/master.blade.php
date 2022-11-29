@@ -152,6 +152,58 @@
                 });
             });
         </script>
+
+<script>
+        $(document).on('click','.blockButton',function(){
+            var getInputVal = $('.blockInput').val();
+        
+            console.log('getInputVal',getInputVal);
+            $.ajax({
+        
+                url : "{{ route('blockData') }}",
+                data : {'number' : getInputVal},
+                type : 'GET',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success : function(result){
+
+                    console.log("===== " + result.message + " =====");
+                    $('.blockInput').after('<span class="error">'+ result.message +'</span>');
+                    $('.blockInput').val('');
+
+                },
+                error : function(error)
+                {
+                    console.log('error');
+                    console.log(error.responseJSON);
+                    console.log(error.status);
+                    if(error.status == 401){
+                        Swal.fire({
+                            title: 'You will need to login first',
+                            showCancelButton: true,
+                            confirmButtonColor: 'rgb(69 133 141)',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, login it!'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "{{ route('customer-login') }}";
+                            }
+                        });
+                    }else
+                    {
+                        Swal.fire({
+                            title: error.responseJSON.message,
+                            showCancelButton: true,
+                            confirmButtonColor: 'rgb(69 133 141)',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                    
+                }
+            });
+        });
+    </script>
     </body>
 
 </html>
