@@ -188,7 +188,11 @@ class LoginController extends Controller
              }
              else if(auth()->user()->role->name == "User")
              {
-                 return redirect()->route('home');
+                if(auth()->user()->is_active == 1)
+                {
+
+                    return redirect()->route('home');
+                }
              }
         }
         else

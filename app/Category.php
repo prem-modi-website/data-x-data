@@ -19,8 +19,7 @@ class Category extends Model
         return Static::where('is_active',1)->latest()->take(5)->get();
     }
     public static function excelCount($cat_id)
-    {
-        $blockData = BlockNumber::where('user_id',auth()->user()->id)->pluck('number');       
-        return ExcelData::where('category_id',$cat_id)->whereNotIn('contact_number',$blockData)->where('is_active',1)->count();
+    {        
+        return ExcelData::where('category_id',$cat_id)->where('is_active',1)->count();
     }
 }

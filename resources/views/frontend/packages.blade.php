@@ -50,7 +50,7 @@
                                         </div>
                                         <div class="price-list ps-5">
                                             <ul class="list-unstyled">
-                                                <li class="mb-3">{!! $cat::excelCount($package->category_id) !!} Data Count</li>
+                                                <li class="mb-3">{{$package->package_count }} Data Count</li>
                                                 <li class="mb-3">90% - 95% Accuracy</li>
                                                 <li class="mb-3">More then 25+ Categorys</li>
                                                 <li class="mb-3">Instant Data Delivery</li>

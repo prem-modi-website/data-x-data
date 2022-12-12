@@ -8,11 +8,10 @@ use App\Category;
 use App\ExcelData;
 use App\BlockNumber;
 use App\Package;
-
+use Auth;
 
 class HomeController extends Controller
-{
-    //
+{    
     public function index()
     {
         $categories = Category::where('is_active',1)->get();

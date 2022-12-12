@@ -41,7 +41,12 @@
                                     </a>
                                 </div>
                                 @if(auth()->user())
-                                <a class="btn btn-white ms-md-4 d-xl-inline-block d-none login-button" href="{{route('customerLogout')}}">LogOut</a>
+                                    @if(auth()->user()->is_active == 1)
+
+                                    <a class="btn btn-white ms-md-4 d-xl-inline-block d-none login-button" href="{{route('customerLogout')}}">Logout</a>
+                                    @else
+                                    <a class="btn btn-white ms-md-4 d-xl-inline-block d-none login-button" href="{{route('customer-login')}}">Login</a>
+                                    @endif
                                 @else
                                 <a class="btn btn-white ms-md-4 d-xl-inline-block d-none login-button" href="{{route('customer-login')}}">Login</a>
                                 @endif

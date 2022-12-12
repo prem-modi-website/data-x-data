@@ -9,10 +9,12 @@ use App\Exports\ExportData;
 use App\ExcelData;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
+use App\OrderDetails;
 use Exception;
 use App\AddCart;
 use App\PaymentDetails;
 use App\Package;
+use Auth;
 
 class RazorpayPaymentController extends Controller
 {
@@ -32,6 +34,7 @@ class RazorpayPaymentController extends Controller
         }
         else
         {
+            Auth::logout();
             return redirect()->route('customer-login');
         }
     }
@@ -54,7 +57,8 @@ class RazorpayPaymentController extends Controller
             }
         }
         $addtoCart = AddCart::where('user_id',auth()->user()->id)->where('is_active',1)->first();
-
+        $orderDetail = OrderDetails::where('package_id',$addtoCart->package_id)->where('user_id',auth()->user()->id)->where('is_active',1)->first();
+        
         $addtoCart->is_active = 0;
         $executeQuery = $addtoCart->update();
         if(! $executeQuery)
@@ -67,8 +71,26 @@ class RazorpayPaymentController extends Controller
         $payment->token = $response->id;
         $payment->payment_method = 'RazorPay';
         $payment->payment_status = 1;
+        $payment->order_id = $orderDetail->id;
         $payment->user_id = auth()->user()->id;
-        $payment->save();
+        $executeQueryPayemnt= $payment->save();
+        if(! $executeQueryPayemnt)
+        {
+            Session::flash('error','Inernal server error please try again later.');
+           
+            return redirect()->back();
+        }
+
+        $orderDetail->is_active = 0;
+
+        $executeQueryorder= $orderDetail->update();
+        if(! $executeQueryorder)
+        {
+            Session::flash('error','Inernal server error please try again later.');
+           
+            return redirect()->back();
+        }
+
         $data = ExcelData::where('category_id',$addtoCart->category_id)->where('is_active',1)->take($addtoCart->qty)->get(["category_id", "contact_number", "pin_code","sector","city","country"]);
         $time = time().rand();
         Excel::store(new ExportData($data), 'excel/'.$time.'.xlsx','real_public');

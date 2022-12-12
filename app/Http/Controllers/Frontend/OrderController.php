@@ -13,6 +13,7 @@ use DB;
 use Log;
 use Validator;
 use Session;
+use Auth;
 
 class OrderController extends Controller
 {
@@ -22,7 +23,13 @@ class OrderController extends Controller
         try{
             if(!auth()->user())
             {
-                return response()->json(['message'=> 'you are unauthorized'],401);
+                if(auth()->user()->is_active == 1)
+                {
+
+                    return response()->json(['message'=> 'you are unauthorized'],401);
+                }else{
+                    Auth::logout();
+                }
 
             }
             DB::beginTransaction();
@@ -45,7 +52,7 @@ class OrderController extends Controller
                 }                
                 elseif($request->qty < 5000)
                 {
-                    Log::info("else 4");
+                    Log::info("else ");
     
                     $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',500)->first();
                 }elseif($request->qty < 10000)
@@ -77,6 +84,11 @@ class OrderController extends Controller
                     Log::info("else 6");
     
                     $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',3000)->first();
+                }
+                if(is_null($package))
+                {
+                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->first();
+
                 }
             }
             Log::info('package');
@@ -165,6 +177,9 @@ class OrderController extends Controller
         }
         else
         {
+           
+                Auth::logout();
+            
             return redirect()->route('customer-login');
         }
         # code...
@@ -198,6 +213,9 @@ class OrderController extends Controller
         }
         else
         {
+            
+            Auth::logout();
+
             return response()->json(['message' => 'You are unauthorized'],401);
 
         }
@@ -238,6 +256,8 @@ class OrderController extends Controller
         }
         else
         {
+            Auth::logout();
+
             return response()->json(['message' => 'You are unauthorized'],401);
 
         }
@@ -270,6 +290,8 @@ class OrderController extends Controller
         }
         else
         {
+            Auth::logout();
+
             return redirect()->route('customer-login');
         }
     }
@@ -282,6 +304,7 @@ class OrderController extends Controller
         }
         if(!auth()->user()->is_active == 1)
         {
+            Auth::logout();
             return redirect()->route('customer-login');
         }
         $rules = [
