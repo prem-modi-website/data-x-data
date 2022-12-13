@@ -35,6 +35,10 @@
                                         <div class="card product-card text-center">
                                             <div class="product-img position-relative">
                                                 <img class="img-fluid rounded" src="{{asset('images/').'/'.$category->image}}" alt="{{$category->name}}" />
+                                                <div class="sample_data_btn">
+                                                <a class="btn-cart excel" href ="{{route('excelCategory',$category->id)}}" type="button" title="Sample Data for {{$category->name}}"><i
+                                                        class="las la-download me-1"></i>&nbsp; Sample Data</a>
+                                                </div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="product-title">{{$category->name}}</div>

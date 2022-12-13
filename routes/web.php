@@ -83,6 +83,7 @@ Route::get('/category','Frontend\HomeController@getCategory')->name('getCategory
 Route::get('/privacy-policy','Frontend\HomeController@privacyPolicy')->name('privacyPolicy');
 Route::get('/terms-and-condition','Frontend\HomeController@termAndCondition')->name('termAndCondition');
 Route::get('block-data', 'Frontend\HomeController@blockData')->name('blockData');
+Route::get('/excel-category/{id}','Frontend\HomeController@excelCategory')->name('excelCategory');
 
 
 Route::get('/customer-login','Frontend\LoginController@customerloginPage')->name('customer-login');

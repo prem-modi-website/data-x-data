@@ -8,6 +8,8 @@ use App\Category;
 use App\ExcelData;
 use App\BlockNumber;
 use App\Package;
+use App\Exports\DataExport;
+use Excel;
 use Auth;
 
 class HomeController extends Controller
@@ -46,6 +48,26 @@ class HomeController extends Controller
         $packages = Package::where('is_active',1)->groupBy('package_amount')->get();        
     
         return view('frontend.packages',compact('packages'));
+    }
+    public function excelCategory($id)
+    {
+        $finalArary = [];
+        $categories = Category::where('id',$id)->where('is_active',1)->first();
+        $ExcelData = ExcelData::where('category_id',$categories->id)->take(10)->get();
+        foreach($ExcelData as $d)
+        {
+           
+            $arr = [
+                'category_name'=>$categories->name,
+                'contact_number' => $d->contact_number,
+                'pin_code'  => $d->pin_code,
+                'sector'=> $d->sector,
+                'city'=> $d->city,
+                'country'=> $d->country,
+            ];
+            $finalArary[] = $arr;
+        }
+        return Excel::download(new DataExport($finalArary), 'excelData.xlsx');
     }
     public function getCategory(Request $request)
     {
