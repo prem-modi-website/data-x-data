@@ -21,119 +21,117 @@ class OrderController extends Controller
     public function addToCart(Request $request)
     {
         try{
-            if(!auth()->user())
+            if(auth()->user())
             {
                 if(auth()->user()->is_active == 1)
                 {
 
-                    return response()->json(['message'=> 'you are unauthorized'],401);
-                }else{
-                    Auth::logout();
-                }
-
-            }
-            DB::beginTransaction();
-            if($request->has('package_id'))
-            {
-                $package = Package::where('id',$request->package_id)->where('is_active',1)->first();
-
-            }else
-            {
-
-                $excelCount = ExcelData::where('category_id',$request->category_id)->where('is_active',1)->count();
-                if($excelCount == 0)
-                {
-                    return response()->json(['message'=> 'Packages Not available.'],422);
-    
-                }
-                if($request->qty > $excelCount)
-                {
-                    return response()->json(['message'=> 'Please Limited package Available.'],422);
-                }                
-                elseif($request->qty < 5000)
-                {
-                    Log::info("else ");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',500)->first();
-                }elseif($request->qty < 10000)
-                {
-                    Log::info("else 4");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1000)->first();
-                }
-                elseif($request->qty < 15000)
-                {
-                    Log::info("else 3");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1500)->first();
-                   
-                }elseif($request->qty < 20000)
-                {
-                    Log::info("else 3");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2000)->first();
-                   
-                }elseif($request->qty < 25000)
-                {
-                    Log::info("else 5");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2500)->first();
-                
-                }elseif($request->qty < 30000)
-                {
-                    Log::info("else 6");
-    
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',3000)->first();
-                }
-                if(is_null($package))
-                {
-                    $package = Package::where('category_id',$request->category_id)->where('is_active',1)->first();
-
-                }
-            }
-            Log::info('package');
-            Log::info($package);
+                    \Log::info("if");                
+                    DB::beginTransaction();
+                    if($request->has('package_id'))
+                    {
+                        $package = Package::where('id',$request->package_id)->where('is_active',1)->first();
+        
+                    }else
+                    {
+        
+                        $excelCount = ExcelData::where('category_id',$request->category_id)->where('is_active',1)->count();
+                        if($excelCount == 0)
+                        {
+                            return response()->json(['message'=> 'Packages Not available.'],422);
             
-            $addtoCart =  AddCart::where('user_id',auth()->user()->id)/* ->where('category_id',$request->category_id) *//* ->where('package_id',$package->id) */->where('is_active',1)->first();
-            \Log::info('addtoCart');
-            \Log::info($addtoCart);
-            // $addtoCart =  AddCart::where('user_id',auth()->user()->id)->where('category_id',$request->category_id)->where('package_id',$package->id)->first();
-            if(is_null($addtoCart))
-            {
-                $cart = new AddCart;
-                $cart->package_id = $package->id;
-                $cart->user_id = auth()->user()->id;
-                $cart->qty = $request->qty;
-                $cart->category_id = $package->category_id;
-                $cart->is_active = 1;
-                $executeQuery= $cart->save();
-                if(! $executeQuery)
-                {
-                 DB::rollback();
-
-                    return response()->json(['message' => 'Inernal server error please try again later.'],500);
+                        }
+                        if($request->qty > $excelCount)
+                        {
+                            return response()->json(['message'=> 'Please Limited package Available.'],422);
+                        }                
+                        elseif($request->qty < 5000)
+                        {
+                            Log::info("else ");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',500)->first();
+                        }elseif($request->qty < 10000)
+                        {
+                            Log::info("else 4");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1000)->first();
+                        }
+                        elseif($request->qty < 15000)
+                        {
+                            Log::info("else 3");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',1500)->first();
+                           
+                        }elseif($request->qty < 20000)
+                        {
+                            Log::info("else 3");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2000)->first();
+                           
+                        }elseif($request->qty < 25000)
+                        {
+                            Log::info("else 5");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',2500)->first();
+                        
+                        }elseif($request->qty < 30000)
+                        {
+                            Log::info("else 6");
+            
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->where('package_amount',3000)->first();
+                        }
+                        if(is_null($package))
+                        {
+                            $package = Package::where('category_id',$request->category_id)->where('is_active',1)->first();
+        
+                        }
+                    }
+                    Log::info('package');
+                    Log::info($package);
+                    
+                    $addtoCart =  AddCart::where('user_id',auth()->user()->id)/* ->where('category_id',$request->category_id) *//* ->where('package_id',$package->id) */->where('is_active',1)->first();
+                    \Log::info('addtoCart');
+                    \Log::info($addtoCart);
+                    // $addtoCart =  AddCart::where('user_id',auth()->user()->id)->where('category_id',$request->category_id)->where('package_id',$package->id)->first();
+                    if(is_null($addtoCart))
+                    {
+                        $cart = new AddCart;
+                        $cart->package_id = $package->id;
+                        $cart->user_id = auth()->user()->id;
+                        $cart->qty = $request->qty;
+                        $cart->category_id = $package->category_id;
+                        $cart->is_active = 1;
+                        $executeQuery= $cart->save();
+                        if(! $executeQuery)
+                        {
+                         DB::rollback();
+        
+                            return response()->json(['message' => 'Inernal server error please try again later.'],500);
+                        }
+        
+                        
+                    }else
+                    {
+        
+                        $addtoCart->package_id = $package->id;
+                        $addtoCart->category_id = $package->category_id;
+                        $addtoCart->qty = $request->qty;
+                        $executeQuery= $addtoCart->update();
+                        if(! $executeQuery)
+                        {
+                            DB::rollback();
+            
+                            return response()->json(['message' => 'Inernal server error please try again later.'],500);
+                        }
+                    }
+                    DB::commit();
+                    return response()->json(['message'=>'Package qty save successfully.'],200);
                 }
-
-                
             }else
             {
+                return response()->json(['message'=> 'you are unauthorized'],401);
 
-                $addtoCart->package_id = $package->id;
-                $addtoCart->category_id = $package->category_id;
-                $addtoCart->qty = $request->qty;
-                $executeQuery= $addtoCart->update();
-                if(! $executeQuery)
-                {
-                    DB::rollback();
-    
-                    return response()->json(['message' => 'Inernal server error please try again later.'],500);
-                }
             }
-            DB::commit();
-            return response()->json(['message'=>'Package qty save successfully.'],200);
-            \Log::info($package);
-            \Log::info('else');
-            return $excelCount;
         } 
         catch(\Exception\Database\QueryException $e)
         {

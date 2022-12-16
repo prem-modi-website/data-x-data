@@ -42,55 +42,65 @@
                             <div class="col-lg-2 col-md-4 col-sm-12 custom_input">
                                 <div class="input-group">
                                     <!--<input type="text" class="form-control theme_select2" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />-->
-                                    <select class="form-control theme_select2">
-                                        <option selected>Select Category</option>
-										<option>Category One</option>
-										<option>Category Two</option>
-										<option>Category Three</option>
+                                    <select class="form-control theme_select2" name="category">
+                                        <option value="" selected>Select Category</option>
+                                        @if(count($categories))
+                                            @foreach($categories as $cat)
+                                                <option value="{{$cat->name}}">{{$cat->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 custom_input">
                                 <div class="input-group">
                                     <!--<input type="text" class="form-control" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />-->
-                                     <select class="form-control theme_select2">
-                                        <option selected>Select State</option>
-										<option>State One</option>
-										<option>State Two</option>
-										<option>State Three</option>
+                                     <select class="form-control theme_select2" name="state">
+                                        <option value="" selected>Select State</option>
+                                        @if(count($states))
+                                            @foreach($states as $st)
+                                                <option value="{{$st->state}}">{{$st->state}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 custom_input">
                                 <div class="input-group">
                                     <!--<input type="text" class="form-control" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />-->
-                                     <select class="form-control theme_select2">
-                                        <option selected>Select City</option>
-										<option>City One</option>
-										<option>City Two</option>
-										<option>City Three</option>
+                                     <select class="form-control theme_select2" name="city">
+                                        <option value="" selected>Select City</option>
+                                        @if(count($cities))
+                                            @foreach($cities as $cit)
+                                                <option value="{{$cit->city}}">{{$cit->city}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 custom_input">
                                 <div class="input-group">
                                     <!--<input type="text" class="form-control" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />-->
-                                     <select class="form-control theme_select2">
-                                        <option selected>Select Country</option>
-										<option>Country One</option>
-										<option>Country Two</option>
-										<option>Country Three</option>
+                                     <select class="form-control theme_select2" name="country">
+                                        <option value="" selected>Select Country</option>
+										@if(count($countries))
+                                            @foreach($countries as $co)
+                                                <option value="{{$co->country}}">{{$co->country}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-4 col-sm-12 custom_input">
                                 <div class="input-group">
                                     <!--<input type="text" class="form-control" name="search" placeholder="Search by Category Name, State, Country & City" aria-label="Search by Category Name, State, Country & City" />-->
-                                     <select class="form-control theme_select2">
-                                        <option selected>Select Pincode</option>
-										<option>Pincode One</option>
-										<option>Pincode Two</option>
-										<option>Pincode Three</option>
+                                     <select class="form-control theme_select2" name="pincode">
+                                        <option value="" selected>Select Pincode</option>
+										@if(count($pincodes))
+                                            @foreach($pincodes as $pin)
+                                                <option value="{{$pin->pin_code}}">{{$pin->pin_code}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
